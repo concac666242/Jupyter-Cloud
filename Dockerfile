@@ -9,8 +9,15 @@ RUN apt update && apt install -y \
     python3 python3-pip \
     curl wget git htop nano unzip \
     net-tools iputils-ping \
-    tmux screen neofetch \
+    tmux screen \
+    ca-certificates gnupg lsb-release \
     && apt clean
+
+# Cài Docker CLI (client)
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
+    apt update && apt install -y docker-ce-cli
 
 # Cài đặt Jupyter Notebook
 RUN pip3 install --no-cache-dir jupyter
