@@ -12,9 +12,7 @@ RUN apt update && apt install -y \
     tmux screen \
     ca-certificates gnupg lsb-release \
     && apt clean
-
-# Nâng cấp pip lên bản mới nhất
-RUN python3 -m pip install --upgrade pip
+    python3 -m pip install --upgrade pip
 
 # Cài Docker CLI (client)
 RUN mkdir -p /etc/apt/keyrings && \
