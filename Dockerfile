@@ -5,8 +5,8 @@ FROM ubuntu:22.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Cập nhật và cài đặt các tool cần thiết
-RUN apt update && apt install -y \
-    python3 python3-pip \
+RUN RUN apt update && apt install -y python3-pip \
+    && python3 -m pip install --no-cache-dir --upgrade pip \
     curl wget git htop nano unzip \
     net-tools iputils-ping \
     tmux screen \
