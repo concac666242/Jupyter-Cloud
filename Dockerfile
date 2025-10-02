@@ -13,24 +13,11 @@ RUN apt update && apt install -y \
     ca-certificates gnupg lsb-release \
     && apt clean
 
+# Nâng cấp pip lên bản mới nhất
+RUN python3 -m pip install --upgrade pip
+
 # Cài Docker CLI (client)
 RUN mkdir -p /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null && \
     apt update && apt install -y docker-ce-cli
-
-# Cài đặt Jupyter Notebook
-RUN pip3 install --no-cache-dir jupyter
-
-# Copy source code nếu có
-COPY . /app
-WORKDIR /app
-
-# Tạo thư mục cho Jupyter notebook (nếu cần)
-RUN mkdir -p /app/notebooks
-
-# Mặc định mở cổng 8888 cho Jupyter
-EXPOSE 8888
-
-# Khởi chạy Jupyter Notebook khi container start, KHÔNG TOKEN / PASSWORD
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]
