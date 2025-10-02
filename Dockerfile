@@ -12,7 +12,6 @@ RUN apt update && apt install -y \
     tmux screen \
     ca-certificates gnupg lsb-release \
     && apt clean
-    pip install --upgrade pip
 
 # Cài Docker CLI (client)
 RUN mkdir -p /etc/apt/keyrings && \
